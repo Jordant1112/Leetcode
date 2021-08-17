@@ -141,3 +141,22 @@ Output:
   backtrack(output, res, nums, n)
   return output
  
+
+## Subsets 
+## 78
+def subsets(self, nums: List[int]) -> List[List[int]]:
+  if len(nums) == 0:
+    return []
+  
+  backtrack(output, res, nums, n):
+    if len(res)<= n:
+      return output.append(res[:])
+    backtrack(output, res+ nums[i], nums[i+1:], n)
+  
+  output = []
+  res = []
+  backtrack(output, res, nums, n
+  return output
+  
+  
+
