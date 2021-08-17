@@ -1,0 +1,77 @@
+## Combinations Template
+# 77
+def combination(self, n:int, k:int) -> List[List[int]]:
+  if n == 0 or n < k:
+    return []
+  
+  def backtrack(index, n, k, res):
+    if len(res) == k:
+      output.append(res[:])
+    for i in range(index, n+1):
+      res.append(i)
+      backtrack(i+1, n, k, res)
+      res.pop()
+  output = []
+  res = []
+  backtrack(1,n,k,res)
+  return output
+
+# 17
+Input: digits = "23"
+Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+
+def combination(self, digits: str) -> List[List[int]]:
+  letters = {'2': ['a','b','c'], '3':['d','e','f'], '4':['g','h', 'i'], '5':['j','k', 'l'], \
+                   '6': ['m','n','o'], '7':['p','q','r','s'], \
+                  '8':['t','u','v'], '9': ['w','x','y','z']}
+  
+  if digits == '':
+    return []
+  
+  def backtrack(index, output, res, digits):
+    if index == len(digits):
+      return output.append(''.join(res))
+    for i in letters[digits[index]]:
+      res.append(i)
+      backtrack(index+1, output, res, digits)
+      res.pop()
+  
+  output = []
+  res = []
+  backtrack(0,output,res,digits)
+  return output
+
+
+## Combination Sum
+Input: candidates = [2,3,6,7], target = 7
+Output: [[2,2,3],[7]]
+
+def combinationsum(self, candidates, target):
+  def backtrack(candidates, res, output, target):
+    if target < 0:
+      return []
+    if target == 0:
+      return output.append(res[:])
+    for i in range(len(candidates)):
+      res.append(candidates[i])
+      backtrack(candidates[i:], res, output, target)
+      res.pop()
+  output = []
+  res = []
+  backtrack(candidates, res, output, target)
+  return output
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+## Permutations Template
+
