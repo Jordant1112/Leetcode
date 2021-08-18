@@ -229,5 +229,36 @@ def exist(self, board: List[List[str]], word:str) ->bool:
   
   
 
+## 254 factor combinations
+Numbers can be regarded as the product of their factors.
+Given an integer n, return all possible combinations of its factors. You may return the answer in any order.
+Input: n = 12
+Output: [[2,6],[3,4],[2,2,3]]
+Input: n = 37
+Output: []
+
+def getfactors(self, n:int) -> List[List[int]]:
+  if n <=1:
+    return []
+  
+  def backtrack(output, res, n, index):
+    if len(res) > 0:
+      res.append(n)
+      output.append(res[:])
+      res.pop()
+    
+    for i in range(index, int(math.sqrt(n))+1):
+      res.append(i)
+      backtrack(output,res, n//i, i)
+      res.pop()
+   
+  output = []
+  res = []
+  backtrack(output, res, n, 2)
+  return output
+
+
+
+
 
 
