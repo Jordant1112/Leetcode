@@ -258,6 +258,82 @@ def getfactors(self, n:int) -> List[List[int]]:
   return output
 
 
+### 306 Additive Number
+Input: "112358"
+Output: true
+Explanation: The digits can form an additive sequence: 1, 1, 2, 3, 5, 8. 
+             1 + 1 = 2, 1 + 2 = 3, 2 + 3 = 5, 3 + 5 = 8
+             
+Input: "199100199"
+Output: true
+Explanation: The additive sequence is: 1, 99, 100, 199. 
+             1 + 99 = 100, 99 + 100 = 199
+Note: Numbers in the additive sequence cannot have leading zeros, so sequence 1, 2, 03 or 1, 02, 3 is invalid.
+
+def isAdditiveNumber(self, num: str) -> bool:
+  def backtrack(num, res):
+    if len(res) >= 3 and res[-1] != res[-2] + res[-3]:
+      return False
+    if not num and len(res) >= 3:
+      return True
+    
+    for i in range(len(num)):
+      curr = num[:i+1]
+      if (curr[0] == 0 and len(curr) != 1):
+        continue
+      if backtrack(num[i+1:], res + int(curr)):
+        return True
+    return False
+ return backtrack(num, [])
+ 
+ 
+##1079 Letter Tile Possibilities
+Input: tiles = "AAB"
+Output: 8
+Explanation: The possible sequences are "A", "B", "AA", "AB", "BA", "AAB", "ABA", "BAA".
+ 
+Input: tiles = "AAABBC"
+Output: 188
+
+Thoughts: it is a permutation questions, but more like #47 that duplicates exists in the set.So we need to deal with the duplicates.
+
+def numTilePossibilities(self, tiles:str) -> int:
+ if len(tiles) == 0:
+  return []
+  
+ 
+ def backtrack(tiles, output, res, n, output_set):
+  if len(res) > 0:
+    if res not in output_set:
+      output_set.add(res)
+    else:
+      return
+   
+  for i in range(len(tiles)):
+    backtrack(tiles[:i] + tiles[i+1:], output, res, n ,output_set)
+
+  output_set = set()
+  output = []
+  res = ''
+  n = len(tiles)
+  backtrack(tiles, output, res, n, output_set)
+  return len(output_set)
+
+
+
+
+
+
+
+ 
+  
+ 
+ 
+ 
+ 
+ 
+
+
 
 
 
