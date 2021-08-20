@@ -310,7 +310,7 @@ def numTilePossibilities(self, tiles:str) -> int:
       return
    
   for i in range(len(tiles)):
-    backtrack(tiles[:i] + tiles[i+1:], output, res, n ,output_set)
+    backtrack(tiles[:i] + tiles[i+1:], output, res + tiles[i], n ,output_set)
 
   output_set = set()
   output = []
