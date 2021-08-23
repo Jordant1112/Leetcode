@@ -1,0 +1,31 @@
+## Binary Tree Divide_conquer Template:
+def divide_conquer(root):
+  if root is None:
+    return ...
+  left_result = divide_conquer(node.left)
+  right_result = divide_conquer(node.right)
+  result = merge left_result and right_result to get merged result
+  return result
+  
+## BST Iterator
+def inorder_traversal(root):
+  if root is None:
+    return []
+  ##创建一个dummy node, 右指针指向root 并放到stack里， 此时stack的栈顶dummy 是iterator的当前位置
+  dummy = TreeNode(0)
+  dummy.right = root
+  stack = [dummy]
+ 
+  inorder = []
+  ## 每次讲iterator挪到下一个点， 也就是调整stack使得栈顶到下一个点
+  while stack:
+    node = stack.pop()
+    if node.right：
+      node = node.right
+      while node:
+        stack.append(node)
+        node = node.left
+    if stack:
+      inorder.append(stack[-1])
+  return inorder
+  
