@@ -1,3 +1,28 @@
+### Binary Search Template
+
+def binary_search(self, nums, target):
+  if not nums:
+    return -1
+  start, end = 0, len(nums)-1
+  while start +1 < end:
+    mid = start + (end - start) //2
+    if nums[mid] < target:
+      start = mid
+    elif nums[mid] == target:
+      end = mid
+    else:
+      end = mid
+  if nums[start] == target:
+    return start
+  if nums[end] == target:
+    return end
+  return -1
+  
+  
+
+
+
+
 ### 875 Koko Eating Bananas
 Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and will come back in h hours.
 Koko can decide her bananas-per-hour eating speed of k. Each hour, she chooses some pile of bananas and eats k bananas from that pile. If the pile has less than k bananas, she eats all of them instead and will not eat any more bananas during this hour.
