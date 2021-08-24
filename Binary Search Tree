@@ -231,3 +231,113 @@ class Solution:
         root = root.right
     return root
    
+ ## 617 Merge Two Binary Trees
+ You are given two binary trees root1 and root2.
+
+Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not.
+You need to merge the two trees into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node.
+Otherwise, the NOT null node will be used as the node of the new tree.
+Return the merged tree.
+
+## Solution 1 Recursive
+class Solution:
+  def mergeTrees(self, root1: Optional[TreeNode], root2: optional[TreeNode]) -> Optional[TreeNode]:
+    if not root1:
+      return root2
+    if not root2:
+      return root1
+    root1.val += root2.val
+    root1.left = mergeTrees(root1.left, root2.left)
+    root1.right = mergeTrees(root1.right, root2.right)
+    return root1
+ 
+## Solution 2 Iterative
+ class Solution
+     def mergeTrees(self, root1: Optional[TreeNode], root2: optional[TreeNode]) -> Optional[TreeNode]:
+        if root1 is None:
+          return root2
+        
+        stack = [(root1, root2)]
+        while stack:
+          s1, s2 = stack.pop()
+          if s2 is None:
+            continue
+          s1.val += s2.val
+          if s1.right is None:
+            s1.right = s2.right
+          else:
+            stack.append((s1.right, s2.right))
+          if s1.left is None:
+            s1.left = s2.left
+          else:
+            stack.append(s1.left, s2.left)
+        
+        return root1
+
+## 530 Minimum Absolute Difference in BST
+## Solution 1
+class Solution:
+  def getMinimumDifference(self, root: Optional[TreeNode]) -> int:
+    ans = []
+    def dfs(root, ans):
+      if not root:
+        return
+      if root:
+        if root.left:
+          dfs(root.left, ans)
+        ans.append(root.val)
+        if root.right:
+          dfs(root.right, ans)
+    dfs(root,ans)
+    k = 99999
+    for i,j in zip(ans, ans[1:]):
+      k = min(k, abs(i-j))
+    return k
+ 
+## Solution 2
+def getMinimumDifference(self, root):
+  self.ans = 1e9
+  self.prev = None
+  
+  def search(node):
+    if node.left:
+      search(node.left)
+    if self.prev is not None:
+      self.ans = min(self.min, node.val - self.prev)
+    self.prev = node.val
+    if node.right:
+      search(node.right)
+   search(root)
+   return self.ans
+   
+## 226 Invert Binary Tree
+Given the root of a binary tree, invert the tree and return its root
+# recursive solution
+class Solution:
+  def invertTree(self, root:Optional[TreeNode]) -> Optional[TreeNode]:
+    if not root:
+      return root
+    tmp = root.right
+    root.right  = root.left
+    root.left = tmp
+    
+    self.invertTree(root.left)
+    self.invertTree(root.right)
+    return root
+ 
+## iterative solution 
+class Solution:
+  def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+    if not root:
+      return root
+    stack = [root]
+    while stack:
+      node = stack.pop()
+      if node:
+        node.right, node.left = node.left, node.right
+        stack += node.left, node.right
+      #################alternative way ##################
+      node.right , node.left = node.left, node.right
+      if node.right: stack.append(node.right)
+      if node.left: stack.append(node.left)
+    return root
