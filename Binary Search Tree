@@ -191,8 +191,43 @@ class Solution:
       tmp = tmp.right
     return answer
 
+## 700 Search in a Binary Search Tree
+You are given the root of a binary search tree (BST) and an integer val.
+Find the node in the BST that the node's value equals val and return the subtree rooted with that node. If such a node does not exist, return null.
+## Solution No.1 (recursive)
+class Solution:
+  def searchBST(self, root: Optional[TreeNode], val: int) -> Optional[TreeNode]:
+    if root is None or root.val == val:
+      return root
+    if root:
+      if root.val > val:
+        return self.searchBST(root.left, val)
+      else:
+        return self.searchBST(root.right,val)
+ 
+ ## Solutioan No.2   (recursive)
+ class Solution:
+  def helper(self, root):
+    if not root or root.val == self.val:
+      self.Found = root
+      return root
+    if root.val > val:
+      return self.helper(root.left)
+    if root.val < val:
+      return self.helper(root.right)
+  def searchBST(self,root,val):
+    self.val = val
+    self.Found = None
+    self.helper(root)
+    return self.Found
 
-
-
-
-    
+## Solution No.3 (iterative)
+class Solution:
+  def searchBST(self, root, TreeNode, val:int) -> TreeNode:
+    while root is not None and root.val != val:
+      if root.val > val:
+        root = root.left
+      else:
+        root = root.right
+    return root
+   
