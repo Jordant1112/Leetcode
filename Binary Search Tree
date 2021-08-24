@@ -136,10 +136,60 @@ def postorder(self, vals):
 
 
 
+## 938 Range Sum of BST
+class Solution:
+  def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
+    ans = []
+    self.inorder(root,ans,low,high)
+    return sum(ans)
+  
+  def inorder(self, root, ans, low,high):
+    if root:
+      if low < root.val:
+        self.inorder(root.left, ans, low, high)
+      if low <= root.val <= high:
+        ans.append(root.val)
+      if high > root.val:
+        self.inorder(root.right,ans, low, high)
+ 
 
 
-
-
+## 1469 Find All The Lonely Nodes
+class Solution:
+  def getLonelyNodes(self, root: Optional[TreeNode]) -> List[int]:
+    ans = []
+    self.node(root, ans)
+    return ans
+    
+  def node(self, root, ans):
+    if root:
+      if root.left and root.right is None:
+        ans.append(root.left.val)
+      if root.right and root.left is None:
+        ans.append(root.right.val)
+      if root.left:
+        self.node(root.left, ans)
+      if root.right:
+        self.node(root.right, ans)
+    
+## 897 Increasing Order Search Tree
+class Solution:
+  def increasingBST(self, root:TreeNode) -> TreeNode:
+    vals = []
+    def dfs(root):
+      if not root:
+        return
+      dfs(root.left)
+      vals.append(root.val)
+      dfs(root.right)
+    
+    dfs(root)
+    answer = tmp = TreeNode(val = vals[0])
+    
+    for i in vals[1:]:
+      tmp.right = TreeNode(val = i)
+      tmp = tmp.right
+    return answer
 
 
 
