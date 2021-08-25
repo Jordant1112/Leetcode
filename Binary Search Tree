@@ -558,4 +558,82 @@ class Solution:
     return output
 
 ## 783 Minimum Distance Between BST Nodes
+Given the root of a Binary Search Tree (BST), return the minimum difference between the values of any two different nodes in the tree.
+Input: root = [4,2,6,1,3]
+Output: 1
+Input: root = [1,0,48,null,null,12,49]
+Output: 1
+
+## Recursive
+class Solution:
+    def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+        
+        self.ans = 1e9
+        self.prev = -1e9
+        def inorder(root):
+            if root:
+                if root.left:
+                    inorder(root.left)
+                self.ans = min(self.ans, root.val - self.prev )
+                self.prev = root.val
+                if root.right:
+                    inorder(root.right)
+        
+        inorder(root)
+        return self.ans
+        
+ ## Iterative
+ class Solution:
+    def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+        ans = 1e9
+        prev = None
+        stack = []
+        node = root
+        while stack or not node：
+            if node:
+              stack.append(node)
+              node = node.left
+            else:
+              node = stack.pop()
+              if prev and node.val - prev.val < ans:
+                ans = node.val - prev.val
+              prev = node
+              node = node.right
+         return ans
+        
+
+
+
+
+##235 Lowest Common Ancestor of a Binary Search Tree
+Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.
+According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the lowest node in T that has both p and q as descendants
+(where we allow a node to be a descendant of itself).”
+
+##Recursive
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+      def inorder(root, p,q):
+        if root:
+          if p.val > root.val and q.val > root.val:
+            return inorder(root.right, p,q)
+          elif p.val < root.val and q.val < root.val:
+            return inorder(root.left,p,q)
+          else:
+            return root
+      return inorder(root,p,q)
+      
+## Iterative
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+      while root：
+        if p.val > root.val and q.val > root.val:
+          root = root.right
+        elif p.val < root.val and q.val < root.val:
+          root = root.left
+        else:
+          return root
+      
+
+
 
