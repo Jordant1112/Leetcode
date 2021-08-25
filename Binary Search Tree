@@ -444,9 +444,118 @@ def inorderTraversal(self, root):
   
   
 ### 653. Two Sum IV - Input is a BST 
-  
+Given the root of a Binary Search Tree and a target number k, return true if there exist two elements in the BST such that their sum is equal to the given target.
+Input: root = [5,3,6,2,4,null,7], k = 9
+Output: true
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        if root is None:
+            return False
+        res = []
+        def inorder(root, res):
+            if root:
+                if root.left:
+                    inorder(root.left, res)
+                res.append(root.val)
+                if root.right:
+                    inorder(root.right, res)
+        
+        inorder(root, res)
+        print(res)
+        for i in range(len(res)):
+            val = k - res[i]
+            if val in res[:i]+res[i+1:] and len(res) > 1:
+                return True
+        return False
+##########################        
+##     faster way       ##
+##########################
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        self.lst = set()
+        self.k = k
+        return self.dfs(root)
     
+    def dfs(self,root):
+        if not root:
+            return False
+        y = self.k - root.val
+        if y in self.lst:
+            return True
+        else:
+            self.lst.add(root.val)
+            return self.dfs(root.left) or self.dfs(root.right)
+## Iterative
+class Solution:
+    def findTarget(self, root: Optional[TreeNode], k: int) -> bool:
+        res = set()
+        stack = [root]
+        
+        while stack:
+            node = stack.pop()
+            if node:
+                value = k - node.val
+                if value not in res:
+                    res.add(node.val)
+                else:
+                    return True
+                stack.append(node.left)
+                stack.append(node.right)
+        
+                
+
+
 ### 501 Find Mode in Binary Search Tree
+Input: root = [1,null,2,2]
+Output: [2]
+
+## Recursive
+class Solution:
+  def findMode(self, root: Optional[TreeNode]) -> List[int]:
+    freq = {}
+    self.preorder(root, freq)
+    output = []
+    max_key = int(max(freq.values()))
+    for key in freq.keys():
+      if freq[key] == max_key:
+        output.append(key)
+    return output
+  
+  def preorder(self, root, freq):
+     if root：
+        if root.val not in freq:
+          freq[root.val] = 1
+        else:
+          freq[root.val] += 1
+        self.preorder(root.left, freq)
+        self.preorder(root.right, freq)
+     
+
+
+
+## Iterative
+class Solution:
+  def findMode(self, root: Optional[TreeNode]) -> List[int]:
+    freq = {}
+    output = []
+    stack = [root]
+    while stack:
+      node = stack.pop()
+      if node:
+        if node.val not in freq:
+          freq[node.val] = 1
+        else:
+          freq[node.val] += 1
+        if node.left:
+          stack.append(node.left)
+        if node.right:
+          stack.append(node.right)
+      
+    max_key = int(max(freq.values()))
+    for key in freq.keys():
+      if freq[key] == max_key:
+        output.append(key)
+    return output
 
 
 
