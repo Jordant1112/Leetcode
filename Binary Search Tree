@@ -385,3 +385,67 @@ class Solution:
           res += str(node.val)
           ans += int(res,2)
     return ans
+
+
+## 94. Binary Tree Inorder Traversal
+
+Given the root of a binary tree, return the inorder traversal of its nodes' values.
+## Recursive
+class Solution:
+  def inorderTraversal(self, root: TreeNode) -> List[int]:
+    if root is None:
+      return []
+    output = []
+    def inorder(root, output):
+      if not root:
+        return
+      if root:
+        if root.left:
+          inorder(root.left, output)
+        output.append(root.val)
+        if root.right:
+          inorder(root.right, output)
+     inorder(root, output)
+     return output
+##################################### def inorder parallel:
+class Solution:
+  def inorderTraversal(self, root: TreeNode) -> List[int]:
+    if root is None:
+      return []
+    self.output = []
+    self.inorder(root, self.output)
+    return self.output
+  def inorder(self, root, output):
+      if not root:
+        return
+      if root:
+        if root.left:
+          self.inorder(root.left, output)
+        output.append(root.val)
+        if root.right:
+          self.inorder(root.right, output)
+
+
+#############################################
+## Iterative
+def inorderTraversal(self, root):
+  ans = []
+  stack = []
+  
+  while stack or root:
+    if root:
+      stack.append(root)
+      root = root.left
+    else:
+      node = stack.pop()
+      ans.append(node.val)
+      root = node.right
+  return ans
+  
+  
+  
+  
+    
+
+
+
