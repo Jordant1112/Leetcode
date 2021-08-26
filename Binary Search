@@ -63,7 +63,7 @@ def twoSumLessThanK(self, nums: List[int], k: int) -> int:
   r = len(nums)-1
   ans = -1
   while l < r:
-    mid = l + (r-l)//w
+    mid = l + (r-l)//2
     if nums[l] + nums[r] < k:
       ans = max(ans, nums[l]+nums[r])
       l += 1
@@ -104,4 +104,32 @@ def findKthPositive(self, arr: List[int], k:int) -> int:
   return r + k
  
  
+## 441 Arranging Coins
+You have n coins and you want to build a staircase with these coins. 
+The staircase consists of k rows where the ith row has exactly i coins. The last row of the staircase may be incomplete.
+Given the integer n, return the number of complete rows of the staircase you will build.
+Input: n = 5
+Output: 2
+Explanation: Because the 3rd row is incomplete, we return 2.
+################
+Note: The start should be 1 in this case
+################
+class Solution:
+    def arrangeCoins(self, n: int) -> int:
+        lo, hi = 1,n
+        while lo + 1 < hi:
+            mid = lo + (hi-lo)//2
+            k_rows = mid*(mid+1)//2
+            if k_rows == n:
+                return mid
+            elif k_rows < n:
+                lo = mid
+            else:
+                hi = mid
+        return min(lo,hi)    
+
+
+
+
+
 
