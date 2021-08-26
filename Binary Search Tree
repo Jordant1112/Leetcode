@@ -689,3 +689,47 @@ class Solution:
                 if node2.right:
                     stack2.append(node2.right)
         return False
+
+## 230 Kth Smallest Element in a BST
+Given the root of a binary search tree, and an integer k, return the kth (1-indexed) smallest element in the tree.
+Input: root = [3,1,4,null,2], k = 1
+Output: 1
+
+## Recursive
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        self.ans = []
+        self.inorder(root)
+        print(self.ans)
+        return self.ans[k-1]
+    
+    
+    
+    def inorder(self, root):
+        if root:
+            if root.left:
+                self.inorder(root.left)
+            self.ans.append(root.val)
+            if root.right:
+                self.inorder(root.right)
+                
+  ## Iterative
+  class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        ans = []
+        stack = []
+        while stack or root:
+            while root:
+                stack.append(root)
+                root = root.left
+            root = stack.pop()
+            k -=1
+            if k == 0:
+                return root.val
+            root = root.right
+        
+
+
+
+
+
