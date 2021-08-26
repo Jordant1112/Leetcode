@@ -728,7 +728,46 @@ class Solution:
                 return root.val
             root = root.right
         
+## Second Minimum Node in a Binary Tree
+class Solution:
+    def findSecondMinimumValue(self, root: Optional[TreeNode]) -> int:
+        self.ans = []
+        self.inorder(root)
+        self.ans.sort()
+        if len(self.ans) > 1:
+            return self.ans[1]
+        return -1       
+    def inorder(self, root):
+        if root:
+            if root.left:
+                self.inorder(root.left)
+            if root.val not in self.ans:
+                self.ans.append(root.val)
+            if root.right:
+                self.inorder(root.right)
+ 
+##1973 Count Nodes Equal to Sum of Descendants
+Given the root of a binary tree, return the number of nodes where the value of the node is equal to the sum of the values of its descendants.
+A descendant of a node x is any node that is on the path from node x to some leaf node. The sum is considered to be 0 if the node has no descendants.
+## recurisve
+class Solution:
+    def equalToDescendants(self, root: Optional[TreeNode]) -> int:
+        self.ans = 0
+        self.postorder(root)
+        return self.ans
+    
+    def postorder(self,root):
+        if not root:
+            return 0
+        
+        s = self.postorder(root.left) + self.postorder(root.right)
+        if root.val == s:
+            self.ans += 1
+        return s + root.val
+        
 
+
+ 
 
 
 
