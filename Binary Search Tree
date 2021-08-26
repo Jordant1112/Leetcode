@@ -635,5 +635,57 @@ class Solution:
           return root
       
 
+## 1214 Two Sum BSTs
+Given the roots of two binary search trees, root1 and root2, 
+return true if and only if there is a node in the first tree and a node in the second tree whose values sum up to a given integer target.
 
 
+## Recursive
+class Solution:
+    def twoSumBSTs(self, root1: Optional[TreeNode], root2: Optional[TreeNode], target: int) -> bool:
+        
+        self.output1 = []
+        self.output2 = []
+        self.inorder(root1, self.output1)
+        self.inorder(root2, self.output2)
+        i = 0
+        while i < len(self.output1):
+            k = target - self.output1[i]
+            if k in self.output2:
+                return True
+            i += 1
+        return False
+    def inorder(self, root, output):
+        if root:
+            if root.left:
+                self.inorder(root.left, output)
+            output.append(root.val)
+            if root.right:
+                self.inorder(root.right, output)
+    
+## Iterative
+class Solution:
+    def twoSumBSTs(self, root1: Optional[TreeNode], root2: Optional[TreeNode], target: int) -> bool:
+        stack1 = [root1]
+        stack2 = [root2]
+        s = set()
+        
+        while stack1:
+            node1 = stack1.pop()
+            if node1:
+                if node1.left:
+                    stack1.append(node1.left)
+                s.add(target - node1.val)
+                if node1.right:
+                    stack1.append(node1.right)
+        #print(s)           
+        while stack2:
+            node2 = stack2.pop()
+            if node2:
+                if node2.left:
+                    stack2.append(node2.left)
+                if node2.val in s:
+                    return True
+                if node2.right:
+                    stack2.append(node2.right)
+        return False
