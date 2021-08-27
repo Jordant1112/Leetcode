@@ -767,7 +767,28 @@ class Solution:
         
 
 ## 1382 Balance a Binary Search Tree
- 
+ class Solution:
+    def balanceBST(self, root: TreeNode) -> TreeNode:
+        self.res = []
+        self.inorder(root)
+        print(self.res)
+        return self.bst(self.res)  
+    
+    def inorder(self, root):
+        if root:
+            if root.left:
+                self.inorder(root.left)
+            self.res.append(root.val)
+            if root.right:
+                self.inorder(root.right)
+    def bst(self, res):
+        if not res:
+            return None
+        mid = len(res)//2
+        root = TreeNode(res[mid])
+        root.left = self.bst(res[:mid])
+        root.right = self.bst(res[mid+1:])
+        return root
 
 
 
