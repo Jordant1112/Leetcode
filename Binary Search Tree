@@ -859,9 +859,114 @@ class Solution:
         stack.append((root.right, root.val, high))
       return True
       
+ 
+ 
+## 1973 Count Nodes Equal to Sum of Descendants
+Given the root of a binary tree, return the number of nodes where the value of the node is equal to the sum of the values of its descendants.
+A descendant of a node x is any node that is on the path from node x to some leaf node. The sum is considered to be 0 if the node has no descendants.
+ 
+## Note: descendants sum is calculated from bottom to top, so naturally, we will do a post order traversal 
+## Recursive
+class Solution:
+  def equalToDescendants(self, root:Optional[TreeNode]) -> int:
+    self.ans = 0
+    self.postorder(root)
+    return self.ans
+    
+    
+    
+  def postorder(self,root):
+    if not root:
+      return 0
+    s = self.postorder(root.left) + self.postorder(root.right)
+    if root.val == s:
+      self.ans +=1
+    return s + root.val
+
+
+
+
+
+
+
+
+ 
+ 
+ 
       
-      
-      
+## 99 Recover Binary Search Tree
+You are given the root of a binary search tree (BST), where exactly two nodes of the tree were swapped by mistake. Recover the tree without changing its structure.
+Follow up: A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
+Input: root = [1,3,null,null,2]
+Output: [3,1,null,null,2]
+
+## Thoughts: 1). Traverse the tree In-order recorder in res=[]. 2). Swap the res[i+1] < res[i]. 3). Recover the root 
+
+## Recursive
+class Solution:
+  def recoverTree(self, root: Optional[TreeNode]) -> None:
+    """
+    Do not return anything, modify root in-place instead.
+    """
+  
+  
+  
+  def inorder(self, root):
+    return self.inorder(root.left) + [root.val] + self.inorder(root.right)
+  def swap_two(self, nums: List[int]) -> (int, int):
+    x = y = -1
+    n = len(nums)
+    for i in range(n-1):
+      if nums[i + 1] < nums[i]:
+        y = nums[i+1]
+        if x == -1:
+          x = nums[i]
+        else:
+          break
+    return x, y
+  
+  def recover(self, root: Optional[TreeNode], count, x, y):
+    if root:
+      if root.val == x or root.val == y:
+        root.val = y if root.val == x else x
+        count -= 1
+        if count == 0:
+          return 
+      self.recover(root.left, count, x, y)
+      self.recover(root.right, count, x, y)
+    
+
+
+## Iterative
+## To identify swapped nodes in iterative solution, track the last node pred in the inorder traversal
+(i.e. the predecessor of the current node) and compare it with current node value. If the current node value
+is smaller than its predecessor pred value, the swapped node is here. 
+
+class Solution:
+  def recoverTree(self, root:TreeNode):
+    x = y = pred = None
+    stack = []
+    
+    while stack or root:
+      while root:
+        stack.append(root)
+        root = root.left
+      root = stack.pop()
+      if pred and pre.val > root.val:
+        y = root
+        if x is None:
+          x = pred
+        else:
+          break
+      pred = root
+      root = root.right
+    
+    x.val, y.val = y.val, x.val
+
+
+
+
+
       
   
 
