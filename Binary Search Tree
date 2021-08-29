@@ -999,9 +999,34 @@ class Solution
           stack.append((depth+1, c))
     return min_depth
 
+## 449 Serialize and deserialize BST
+Serialization is converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, 
+or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+Design an algorithm to serialize and deserialize a binary search tree. There is no restriction on how your serialization/deserialization algorithm should work. 
+You need to ensure that a binary search tree can be serialized to a string, and this string can be deserialized to the original tree structure.
+The encoded string should be as compact as possible.
 
-
-
+class Codec:
+  def serialize(self, root: TreeNode) -> str:
+    def postorder(root): 
+      return self.postorder(root.left) + self.postorder(root.right) + [root.val] if root else[]
+    return ' '.join(postorder(root))
+  
+  def deserialize(self, data:str) -> TreeNode:
+    data = [x for x in data.split(' ') if x]
+    return helper(data)
+  
+  
+  
+  def helper(self, data, lower = float('-inf'), upper = float('inf')):
+    if not data or data[-1] < lower or data[-1] > upper:
+      return None
+    val = data.pop()
+    root = TreeNode(val)
+    root.right = self.helper(val, upper)
+    root.left = self.helper(lower, val)
+    
+    return root
 
 
 
