@@ -1067,7 +1067,22 @@ class Solution:
    
    
 
+## 285 Inorder Successor in BST
 
+## it is similar to finding the Inorder Successor in a Binary Tree. We should look at solution applies to any kind of binary tree.
+### Approach 1 ## Iterviewers may ask to find the inorder success for a binary tree instead of BST
+####Situation 1:
+when the node has a right child
+The inorder successor in this case is the leftmost node in the tree rooted at the right child. 
+####Situation 2:
+when the node doesn't have a right child
+This is trickier to handle than the first case. In this case, one of the ancestors acts as the inorder successor. That ancestor can be the immediate parent,
+or, it can be one of the ancestors further up the tree.
+
+Algorithm:
+1. We define two class variables for this algorithm: previous and inorderSuccessorNode. The previous variable will only be used when handling the second case
+as previously explained and the inorderSuccessorNode will ultimately contain the result to be returned
+2. Inside the function inorderSuccessor, we first check which of the two cases we need to handle. For that, we simply check for the presence of a right child.
 
     
     
