@@ -1160,8 +1160,38 @@ class Solution:
 
 
 
+## 1902 Depth of BST Given Insertion Order
+You are given a 0-indexed integer array order of length n, a permutation of integers from 1 to n representing the order of insertion into a binary search tree.
+
+A binary search tree is defined as follows:
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+The binary search tree is constructed as follows:
+
+order[0] will be the root of the binary search tree.
+All subsequent elements are inserted as the child of any existing node such that the binary search tree properties hold.
+Return the depth of the binary search tree.
+
+A binary tree's depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
 
-
+class Solution:
+  def maxDepthBST(self, order: List[int]) -> int:
+    def check(order):
+      if len(order) <= 1:
+        return 1
+      root = order[0]
+      left, right = [], []
+      for i in order[1:]:
+        if i > root:
+          right.append(i)
+        else:
+          left.append(i)
+      return 1 + max(check(left), check(right))
+      
+    if max(order) == order[0] and min(order) == order[-1] or min(order) == order[0] and max(order) == order[-1]:
+      return len(order)
+    return check(order)
 
 
