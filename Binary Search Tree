@@ -1096,10 +1096,67 @@ or in other words, the node is the inorder successor of the node p and we return
 
 3. Finally, we return the inorderSuccessorNode as our result.
     
+class Solution:
+  previous = None
+  inorder_successor_node = None
+  
+  def inorderSuccessor(self, root: 'TreeNode', p: 'TreeNode') -> 'TreeNode':
+    self.previous = None
+    self.inorder_successor_node = None
+    # Case 1: We simply need to find the leftmost node in the SUbtree rooted at p.right
+    if p.right:
+      leftmost = p.right
+      while leftmost.left:
+        leftmost = leftmost.left
+      self.inorder_successor_node = leftmost
+      
+    # Case 2: We need to perform the standard inorder traversal and keep track of the previous node
+    else:
+      self.inorderCase2(root, p)
+    return self.inorder_successor_node
     
+    
+    
+  def inorderCase2(self, node: 'TreeNode', p:'TreeNode'):
+    if not node:
+      return
+    # Recurse on the leftside
+    self.inorderCase2(root.left, p)
+    # Check if previous is the inorder predecessor of node
+    if self.previous == p and not self.inorder_successor_node:
+      self.inorder_successor_node = node
+      return
+    # Keeping previous up-to-date for further recursion
+    self.previous = node
+    # recurse the right side
+    self.inorderCase2(node.right, p)
  
 
+###Approach 2 use the BST properties
+By comparing the values of the node p and the current node in the tree during the traverwsal, we can discard half of the remaining nodes
+at each step, and thus, for a balanced binary search tree we can search for our inorder successor in logarithmic time rather than linear time.
+That's a huge improvement over the preivous solution
 
+## Algorithm
+1. We start our traversal with the root node and continue the traversal until our current node reaches a null value i.e. 
+there are no more nodes left to process.
+2. At each step we compare the value of node p with that of node.
+1). If p.val >= node.val that implies we can safely discard the left subtree since all the nodes there including the current node have values less than p
+2). However, if p.val < node.val, that implies that the successor must lie in the left subtree and that the current node is apotential candidate for inorder
+successor. Thus, we update our local variable for keeping track of the successor, successor, to node.
+3). return successor
+
+class Solution:
+  def inorderSuccessor(self, root:'TreeNode', p: 'TreeNode') -> 'TreeNode':
+    successor = None
+    while root:
+      if p.val >= root.val:
+        root = root.right
+      else:
+        successor = root
+        root = root.left
+    
+    return successor
 
 
 
