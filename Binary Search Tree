@@ -1217,6 +1217,38 @@ class Solution:
 
 #Catalan Numbers: (2n)! / n!/ (n+1)!
 
+## 95 Unique BST II
+Given an integer n, return all the structurally unique BST's (binary search trees), which has exactly n nodes of unique values from 1 to n. Return the answer in any order.
+Input: n = 3
+Output: [[1,null,2,null,3],[1,null,3,2],[2,1,3],[3,1,null,null,2],[3,2,null,1]]
+Input: n = 1
+Output: [[1]]
+
+class Solution:
+  def generateTrees(self, n:int) -> List[Optional][TreeNode]:
+    if n == 0:
+      return []
+    return self.helper(1,n)
+    
+ def helper(self, start, end):
+  res = []
+  if start > end:
+    return []
+  
+  for curRootval in range(start, end+1):
+    left = self.helper(start, curRootval-1)
+    right = self.helper(curRootval +1, end)
+    for l in left:
+      for r in right:
+        root = TreeNode(curRootval)
+        root.left = l
+        root.right = r
+        res.append(root)
+  return res
+
+
+
+
 
 
 
