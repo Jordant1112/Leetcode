@@ -1313,7 +1313,21 @@ Output: true
 Input: preorder = [5,2,6,1,3]
 Output: false
 
+## Note: Use stack to record all the number in an decreasing order, once we are at the num greater than the stack[-1], we know that all the previous num in stack
+should be in the left hand side and the last num to pop out from the stack is the root. If the number on the righte side is smaller than the root, then it should be wrong.
 
+class Solution:
+  def verifyPreorder(self, preorder: List[int]) -> bool:
+    stack = []
+    check_point = None
+    for num in preorder:
+      while stack and num > stack[-1]:
+        check_point = stack.pop()
+      if check_point and num < check_point:
+        return False
+      stack.append(num)
+    return True
+    
 
 
 
