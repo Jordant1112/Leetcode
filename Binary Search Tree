@@ -1489,10 +1489,33 @@ class Solution:
     
     
     
+###333 Lartest BST Subtree
+
+Given the root of a binary tree, find the largest subtree, which is also a Binary Search Tree (BST), where the largest means subtree has the largest number of nodes.
+Note: A subtree must include all of its descendants.
 
 
-
-
+class Solution:
+  def largestBSTSubtree(self, root: Optional[TreeNode]) -> int:
+      if not root:
+        return 0
+      minimum = float('-inf')
+      maximum = float('inf')
+      if self.isBST(root, minimum, maximum):
+        return self.count(root)
+      return max(self.largestBSTSubtree(root.left), self.largestBSTSubtree(root.right))
+  
+  def count(self, root):
+    if not root:
+      return 0
+    return 1 + self.count(root.left) + self.count(root.right)
+   
+ def isBST(self, root, minimum, maximum):
+  if not root:
+    return True
+  if root.val < minimum or root.val > maximum:
+    return False
+  return self.isBST(root.right, root.val +1, maximum) and self.isBST(root.left, minimum, root.val -1)
 
 
 
