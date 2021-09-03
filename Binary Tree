@@ -22,6 +22,26 @@ class Solution:
     return 1 + max(self.height(root.left), self.height(root.right))
 
 
+## 1302 Deepest Leaves Sum
+Given the root of a binary tree, return the sum of values of its deepest leaves.
+
+class Solution:
+    def deepestLeavesSum(self, root: Optional[TreeNode]) -> int:
+        self.res = []
+        self.depth = 0
+        self.inorder(root,0)
+        print(self.res)
+        return sum(self.res[-1])
+    
+    def inorder(self, root, depth):
+        if len(self.res) < depth:
+            self.res.append([])
+            
+        if root:
+            self.inorder(root.left, depth+1)   
+            self.inorder(root.right, depth +1)
+            self.res[depth].append(root.val)
+            
 
 
 
