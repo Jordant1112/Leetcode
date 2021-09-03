@@ -65,5 +65,19 @@ class Solution:
         return root
 
 
-
-
+513. Find Bottom Left Tree Value
+Given the root of a binary tree, return the leftmost value in the last row of the tree.
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        self.res = []
+        self.inorder(root,0)
+        return self.res[-1][0]
+    
+    
+    def inorder(self, root, depth):
+        if len(self.res) < depth:
+            self.res.append([])
+        if root:
+            self.inorder(root.left, depth + 1)
+            self.res[depth].append(root.val)
+            self.inorder(root.right, depth + 1)
