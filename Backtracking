@@ -461,6 +461,33 @@ def generateParenthesis(self, n:int) -> List[str]:
    
 
 
+def generateParenthesis(self, n:int) -> List[str]:
+    res = []
+    ans = []
+    backtrack(res,ans,0,0, n)
+    return ans
+
+def backtrack(res,ans,left, right, n):
+  if len(res) == 2*n:
+    return ans.append(''.join(res))
+  if left < n:
+    res.append('(')
+    backtrack(res,ans,left +1, right, n)
+    res.pop()
+  if right < left:
+    res.append(')')
+    backtrack(res, ans, left, right+1, n)
+    res.pop()
+  
+
+
+
+
+
+
+
+
+
 ## 638 Shopping Offers
 In LeetCode Store, there are n items to sell. Each item has a price. 
 However, there are some special offers, and a special offer consists of one or more different kinds of items with a sale price.
