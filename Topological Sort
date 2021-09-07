@@ -94,7 +94,35 @@ class Solution:
 
 
 
+### 1976 Number of Ways to Arrive at Destination
 
+class Solution:
+    def countPaths(self, n: int, roads: List[List[int]]) -> int:
+        g = collections.defaultdict(list)
+        for i,j,time in roads:
+            g[i].append((j,time))
+            g[j].append((i,time))
+        times = [inf] * n
+        times[0] = 0
+        
+        ways = [0]*n
+        ways[0] = 1
+        priorityqueue = [(0,0)]  
+        while priorityqueue:
+            old_t, i = heappop(priorityqueue)
+            for j,time in g[i]:
+                new_t = old_t + time
+                if new_t < times[j]:
+                    heappush(priorityqueue, (new_t, j))
+                    times[j] = new_t
+                    ways[j] = ways[i]
+                elif new_t == times[j]:
+                    ways[j] += ways[i]
+        
+        mod = 10**9 + 7
+        return ways[-1] % mod
+        
+        
 
 
 
