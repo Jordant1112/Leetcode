@@ -1,3 +1,13 @@
+### Kahn's Algorithm
+Topological sorting helps solve the problem of pre-requisites. It provides a linear sorting based on the required ordering between vertices in directed acyclic graphs.
+Limitation:
+1). Topological sorting only works with graphs that are directed and acyclic
+2). There is at least one vertex in the 'graph' with an 'in-degree' of 0. If all vertices in the 'graph' have non-zero 'in-degree', then all vertices need at least one vertex 
+as a predecessor. In this case, no vertex can serve as the starting vertex. 
+
+
+
+
 ## 207 Course Schedule
 There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. 
 You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
@@ -39,7 +49,7 @@ class Solution:
           for neighbor in g[curr]:
              degree[neighbor] -= 1
              if degree[neighbor] == 0:
-                course.append(neighbor)
+                queue.append(neighbor)
        if len(course) == numCourses:
           return True
        else:
