@@ -1,0 +1,81 @@
+## Disjoint sets
+The primary use of disjoint sets is to address the connectivity between the components of a network. 
+We can use a disjoint set to determine if two people share a common ancestor
+1). First union the connection:
+g = collections.defaultdict(list)
+for i,j in graph(the data):
+  g[i].append(j)
+2). Check if vertices are connected.
+find the root node for connectivity
+
+## Quick Find
+class UnionFind:
+    def __init__(self, size):
+        self.root = [i for i in range(size)]
+
+    def find(self, x):
+        return self.root[x]
+		
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            for i in range(len(self.root)):
+                if self.root[i] == rootY:
+                    self.root[i] = rootX
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+        
+## Quick Union
+class UnionFind:
+    def __init__(self, size):
+        self.root = [i for i in range(size)]
+
+    def find(self, x):
+        while x != self.root[x]:
+            x = self.root[x]
+        return x
+		
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            self.root[rootY] = rootX
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+
+## Union by Rank
+class UnionFind:
+    def __init__(self, size):
+        self.root = [i for i in range(size)]
+        self.rank = [1] * size
+
+    def find(self, x):
+        while x != self.root[x]:
+            x = self.root[x]
+        return x
+		
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        if rootX != rootY:
+            if self.rank[rootX] > self.rank[rootY]:
+                self.root[rootY] = rootX
+            elif self.rank[rootX] < self.rank[rootY]:
+                self.root[rootX] = rootY
+            else:
+                self.root[rootY] = rootX
+                self.rank[rootX] += 1
+
+    def connected(self, x, y):
+        return self.find(x) == self.find(y)
+        
+        
+        
+        
+        
+        
+
+
