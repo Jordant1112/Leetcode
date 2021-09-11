@@ -706,22 +706,20 @@ class Solution:
         for i in range(10):
             self.dfs(i, low, high)
         return sorted(self.q)
-    
-    
-    
-    def dfs(self, n, low, high):
-        if n > high:
-            return
-        if n >= low:
-            self.q.add(n)
-        d = n % 10
-        if d == 0:
-            self.dfs(n*10 + 1, low, high)
-        elif d == 9:
-            self.dfs(n*10 + 8, low, high)
-        else:
-            self.dfs(n*10 +d +  1, low, high)
-            self.dfs(n*10 + d - 1, low ,high)
+ 
+  def dfs(self, n, low, high):
+      if n > high:
+          return
+      if n >= low:
+          self.q.add(n)
+      d = n % 10
+      if d == 0:
+          self.dfs(n*10 + 1, low, high)
+      elif d == 9:
+          self.dfs(n*10 + 8, low, high)
+      else:
+          self.dfs(n*10 +d +  1, low, high)
+          self.dfs(n*10 + d - 1, low ,high)
             
 
 
