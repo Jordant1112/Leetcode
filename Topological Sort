@@ -386,20 +386,33 @@ Explanation: Each circle contains the node number in black and its distanceToLas
 3) 1 --> 3 --> 5
 
 
-  
+class Solution:
+    def countRestrictedPaths(self, n: int, edges: List[List[int]]) -> int:
+        g = collections.defaultdict(int)
+        degree = {n:0}
+        for i, j, dis in edges:
+            g[i].append((j, dis))
+            g[j].append((i, dis))
+        for i in range(1,n):
+            degree[i] = inf
         
+        h = [(0,n)]
+        visited = set()
+        count = {n:1}
         
+        while h:
+            x,u = heapq.heappop(h)
+            if u not in visited:
+                visited.add(u)
+                for v, dis in g[u]:
+                    if v not in visited:
+                        if degree[v] > degree[u]:
+                            count[v] = count.get(v,0) + count[u]
+                        if degree[u] + dis < degree[v]:
+                            degree[v] = degree[u] + dis
+                            heapq.heappush(h, (degree[v],v))
+        return count[1] % (10**9 + 7)
         
-
-
-
-
-
-
-
-
-
-
 
 ## 269 Alien Dictionary
 There is a new alien language that uses the English alphabet. However, the order among the letters is unknown to you.
@@ -409,6 +422,50 @@ If there is no solution, return "". If there are multiple solutions, return any 
 A string s is lexicographically smaller than a string t if at the first letter where they differ, the letter in s comes before the letter in t in the alien language. 
 If the first min(s.length, t.length) letters are the same, then s is smaller if and only if s.length < t.length.
 
+Input: words = ["wrt","wrf","er","ett","rftt"]
+Output: "wertf"
+
+Input: words = ["z","x"]
+Output: "zx"
+
+Input: words = ["z","x","z"]
+Output: ""
+Explanation: The order is invalid, so return "".
+
+class Solution:
+    from collections import defaultdict, Counter, deque
+    def alienOrder(self, words: List[str]) -> str:
+        # Step 0: create data structures + the in_degree of each unique letter to 0
+        adj_list = defaultdict(set)
+        in_degree = Counter({c:0 for word in words for c in word})
+        
+        # Step 1 : We need to populate adj_list and in-degree.
+        # For each pair of adjacent words...
+        for first_word, second_word in zip(words, words[1:]):
+            for c, d in zip(first_word, second_word):
+                if c!= d:
+                    if d not in adj_list[c]:
+                        adj_list[c].add(d)
+                        in_degree[d] += 1
+                    break
+                else:   ## Check that second word isn't a prefix of first word.
+                    if len(second_word) < len(first_word): return ' '
+        # Step 2: We need to repeatedly pick off nodes with an indegree of 0.
+        output = []
+        queue = deque([c for c in in_degree if in_degree[c] == 0])
+        while queue:
+            c = queue.popleft()
+            output.append(c)
+            for d in adj_list[c]:
+                in_degree[d] -=1
+                if in_degree[d] == 0:
+                    queue.append(d)
+        # If not all letters are in output, that means there was a cycle and so
+        # no valid ordering. Return  " " as per the problem description.
+        if len(output) < len(in_degree):
+            return ' '
+        # Otherwise, convert the ordering we found into a string and return it.
+        return ''.join(output)
 
 
 
