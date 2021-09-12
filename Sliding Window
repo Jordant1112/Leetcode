@@ -1,1 +1,37 @@
+## 1763. Longest Nice Substring
+A string s is nice if, for every letter of the alphabet that s contains, it appears both in uppercase and lowercase. For example, 
+"abABB" is nice because 'A' and 'a' appear, and 'B' and 'b' appear. However, "abA" is not because 'b' appears, but 'B' does not.
+Given a string s, return the longest substring of s that is nice. If there are multiple, return the substring of the earliest occurrence. 
+If there are none, return an empty string.
+
+Input: s = "YazaAay"
+Output: "aAa"
+Explanation: "aAa" is a nice string because 'A/a' is the only letter of the alphabet in s, and both 'A' and 'a' appear.
+"aAa" is the longest nice substring.
+
+Input: s = "Bb"
+Output: "Bb"
+Explanation: "Bb" is a nice string because both 'B' and 'b' appear. The whole string is a substring.
+
+Input: s = "c"
+Output: ""
+Explanation: There are no nice substrings.
+
+Input: s = "dDzeE"
+Output: "dD"
+Explanation: Both "dD" and "eE" are the longest nice substrings.
+As there are multiple longest nice substrings, return "dD" since it occurs earlier.
+
+
+class Solution:
+  def longestNiceSubstring(self, s):
+    if len(s) < 2:
+      return ''
+    char = set(s)
+    for i in range(len(s)):
+      if not (s[i].upper in char and s[i].lower in char):
+        s1 = self.longestNiceSubstring(s[:i])
+        s2 = self.longestNiceSubstring(s[i+1:])
+        return s2 if len(s2) > len(s1) else s1
+    return s
 
