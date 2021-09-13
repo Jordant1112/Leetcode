@@ -69,6 +69,39 @@ class Solution:
     return maximum/k
 
 
+#### 219. Contains Duplicate II
+Given an integer array nums and an integer k, return true if there are two distinct indices i and j in the array such that nums[i] == nums[j] and abs(i - j) <= k.
+Input: nums = [1,2,3,1], k = 3
+Output: true
+
+Input: nums = [1,2,3,1,2,3], k = 2
+Output: false
+
+
+# Approach 1, Dictionary
+class Solution:
+  def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool: 
+      d = {}
+      for i, v in enumerate(nums):
+        if v in d and i - d[v] <= k:
+          return True
+        d[v] = i
+      return False
+
+## Approach 2, Sliding Windows
+class Solution:
+  def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool: 
+      windows = set()
+      for i in range(0 , len(nums)):
+        if len(windows) >= k+1:
+          window.remove(nums[i-k-1])
+        if nums[i] in windows:
+          return True
+        windows.add(nums[i])
+      return False
+
+
+
 
 
 
