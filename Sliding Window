@@ -261,10 +261,59 @@ class Solution:
       res.append(cur)
     return res
       
+## 1100 Find K-length Substrings With No Repeated Characters
+Given a string s and an integer k, return the number of substrings in s of length k with no repeated characters.
 
+Input: s = "havefunonleetcode", k = 5
+Output: 6
+Explanation: There are 6 substrings they are: 'havef','avefu','vefun','efuno','etcod','tcode'.
 
+Input: s = "home", k = 5
+Output: 0
+Explanation: Notice k can be larger than the length of s. In this case, it is not possible to find any substring.
 
+## Approach 1
+class Solution:
+  def numKLenSubstrNoRepeats(self, s: str, k: int) -> int:
+    if k > len(s):
+      return 0
+    c = collections.Counter(s[:k])
+    ans = 0
+    if max(c.values()) == 1 and len(c) == k:
+      ans += 1
+    for i in range(k, len(s)):
+      if s[i] not in c:
+        c[s[i]] = 1
+      else:
+        c[s[i]] += 1
+      c[s[i-k]] -= 1
+      if c[s[i-k]] == 0:
+        c.pop(s[i-k])
+      if len(c) == k and all(value == 1 for value in c.values()):
+        ans += 1
+      else:
+        continue
+    return ans
 
+Approach 2
+class Solution:
+    def numKLenSubstrNoRepeats(self, s: str, k: int) -> int:
+        if len(s) < k:
+            return 0
+        
+        self.points = 0
+        currString = s[:k]
+        self.checkDup(currString)
+        
+        for i in range(len(s) - k):
+            currString = s[i+1:i+k+1]
+            self.checkDup(currString)
+        
+        return self.points 
+    
+    def checkDup(self, currString):
+        if len(currString) == len(set(currString)):
+            self.points += 1
 
 
 
