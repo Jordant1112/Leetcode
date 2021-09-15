@@ -8,3 +8,76 @@ Note:
 
 A Sudoku board (partially filled) could be valid but is not necessarily solvable.
 Only the filled cells need to be validated according to the mentioned rules.
+
+class Solution:
+  def isValidSudoku(self, board: List[List[str]]) -> bool:
+    N = len(board)
+    row = [set() for x in range(N)]
+    col = [set() for x in range(N)]
+    boxes = [set() for x in range(N)]
+    
+    for r in range(N):
+      for c in range(N):
+        val = board[r][c]
+        if val == '.':
+          continue
+        
+        if val in row[r]:
+          return False
+        row[r].add(val)
+        
+        if val in col[r]:
+          return False
+        col[r].add(val)
+        
+        index = (c//3) + (r//3)*3
+        if val in boxes[index]:
+          return False
+        boxes[index].add(val)
+    return True
+
+
+## 74 Search a 2D Matrix
+Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+Output: true
+
+Input: matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 13
+Output: false
+
+class Solution:
+  def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+    n = len(matrix)
+    m = len(matrix[0])
+    if n == 0:
+      return False
+      
+    l = 0
+    r = m*n -1
+    while l <= r:
+      mid = l + (r-l)//2
+      if target == matrix[mid//m][mid % m]:
+        return True
+      else:
+        if target < matrix[mid//m][mid % m]:
+          r = mid - 1
+        else:
+          r = mid -1
+    return False
+
+
+
+
+
+
+
+
+
+
+
+
+
