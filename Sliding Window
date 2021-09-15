@@ -497,6 +497,30 @@ class Solution:
 
 
 
+##487 Max Consecutive Ones II
+Given a binary array nums, return the maximum number of consecutive 1's in the array if you can flip at most one 0.
+
+Input: nums = [1,0,1,1,0]
+Output: 4
+Explanation: Flip the first zero will get the maximum number of consecutive 1s. After flipping, the maximum number of consecutive 1s is 4.
+
+class Solution:
+  def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+     left = 0
+     right = 0
+     ans = 0
+     count = 0
+     
+     while right < len(nums):
+        if nums[right] == 0:
+          count += 1
+        while count > 1:
+          if nums[left] == 0:
+            count -=1
+          left += 1
+        ans = max(ans, right - left + 1)
+      right += 1
+    return ans
 
 
 
