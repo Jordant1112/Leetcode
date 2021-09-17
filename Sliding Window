@@ -783,11 +783,51 @@ Explanation: The subarrays of [3,3,5,5] are:
 - [3,3,5,5] with sum 16
 Ordering the sums from smallest to largest gives 3, 3, 5, 5, 6, 8, 10, 11, 13, 16. The 7th smallest is 10.
  
+## Think about sliding window and binary search
+##############################################################################################################################
+Explanation
+Based on the hint section, we can find number of subarray-sum less than x, so that local the kth smallest number among all subarrays using binary search.
+Imagine we find all subarray-sum for some array and sort them, the kth smallest subarray-sum, will lay between the minimum sum and the maximum sum.
+We don't necessarily need to find all subarray-sum, nor sort them
+Instead, since we know the range, we can use binary search to locate the kth smallest
+Essentially, using a binary search is to eliminate the subarray-sums which contains more than k values
+At the of the binary search, the lower & upper bound will crossover.
+The lower bound tells us, there are k sums that less than this lower bound, which makes this lower bound the kth smallest value, or the largest among these k sums.
+To find number of subarray-sum less than x, we can iterate the array while maintaining two pointers to count how many valid subarrays are there. 
+The time complexity of this process is O(n) because each element is visited twice at max. (n is the length of the array)
+Time complexity: O(Nlog(N)), where N is the length of the array. Binary search takes O(log(N*(N+1)/2)) = O(log(N^2)) = O(2logN) = O(logN). 
+Finding subarray-sum less than x takes O(N) as mentioned before.
+Space Complexity: O(1)
+################################################################################################################################
 
-
-
-
- 
+ class Solution:
+  def kthSmallestSubarraySum(self, nums: List[int], k:int) -> int:
+    lo = min(nums)
+    hi = sum(nums)
+    while lo <= hi:
+      mid = lo + (hi-lo)//2
+      if k <= self.number_of_subarray_smaller_than_x(mid, nums):
+        hi = mid -1
+      else:
+        lo = mid +1
+    return lo
+  
+  def number_of_subarray_smaller_than_x(self, x , nums):
+    j = 0
+    count = 0
+    cur = 0
+    for i in range(len(nums)):
+      cur += nums[i]
+      while cur > x:
+        cur -= nums[j]
+        j += 1
+      count += j-i+1
+    return count
+        
+    
+    
+    
+    
 
 
 
