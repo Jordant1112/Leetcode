@@ -749,6 +749,33 @@ Input: nums = [0,6,5,2,2,5,1,9,4], firstLen = 1, secondLen = 2
 Output: 20
 Explanation: One choice of subarrays is [9] with length 1, and [6,5] with length 2.
 
+Input: nums = [3,8,1,3,2,1,8,9,0], firstLen = 3, secondLen = 2
+Output: 29
+Explanation: One choice of subarrays is [3,8,1] with length 3, and [8,9] with length 2.
+
+Input: nums = [2,1,5,6,0,9,5,0,3,8], firstLen = 4, secondLen = 3
+Output: 31
+Explanation: One choice of subarrays is [5,6,0,9] with length 4, and [3,8] with length 3.
+
+################ Think about prefix sum and sliding window
+
+
+class Solution:
+  def maxSumTwoNoOverlap(self, nums: List[int], firstLen: int, secondLen: int) -> int:
+    if len(nums) < firstLen + secondLen:
+      return 0
+    for i in range(1, len(nums)):
+      nums[i] += nums[i-1]
+    max_f_len = nums[firstLen -1]
+    max_s_len = nums[secondLen - 1]
+    res = nums[firstLen + secondLen -1]
+    
+    for i in range(firstLen + secondLen, len(nums)):
+      max_f_len = max(max_f_len, nums[i-secondLen] - nums[i-secondLen - firstLen])
+      max_s_len = max(max_s_len, nums[i-firstLen] - nums[i - firstLen - secondLen])
+      res = max(res, max_s_len + nums[i] - nums[i - firstLen], max_f_len + nums[i] - nums[i-secondLen])
+    return res
+
 
 
 
