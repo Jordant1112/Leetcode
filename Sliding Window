@@ -935,9 +935,31 @@ class Solution:
     
     
 
+### 718 Maximum Length of Repeated Subarray
 
 
+Given two integer arrays nums1 and nums2, return the maximum length of a subarray that appears in both arrays.
+Input: nums1 = [1,2,3,2,1], nums2 = [3,2,1,4,7]
+Output: 3
+Explanation: The repeated subarray with maximum length is [3,2,1].
 
+
+Input: nums1 = [0,0,0,0,0], nums2 = [0,0,0,0,0]
+Output: 5
+
+class Solution:
+  def findLenhgth(self, nums1: List[int], nums2: LIst[int]) -> int:
+    n = len(nums1)
+    m = nums(nums2)
+    count = 0
+    
+    t = [[0]*(m+1) for _ in range(n+1)]
+    for i in range(n+1):
+      for j in range(m+1):
+        if nums1[i-1] == nums2[j-1]:
+          t[i][j] = t[i-1][j-1] +1
+          count = max(count, t[i][j])
+     return count
 
 
 
