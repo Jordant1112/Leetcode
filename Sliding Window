@@ -1841,8 +1841,55 @@ class Solution:
 
 
 
+## 683 K Empty Slots
+You have n bulbs in a row numbered from 1 to n. Initially, all the bulbs are turned off. 
+We turn on exactly one bulb every day until all bulbs are on after n days.
+You are given an array bulbs of length n where bulbs[i] = x means that on the (i+1)th day, 
+we will turn on the bulb at position x where i is 0-indexed and x is 1-indexed.
+Given an integer k, return the minimum day number such that there exists two turned on bulbs that have exactly k bulbs between them that are all turned off. 
+If there isn't such day, return -1.
 
+Input: bulbs = [1,3,2], k = 1
+Output: 2
+Explanation:
+On the first day: bulbs[0] = 1, first bulb is turned on: [1,0,0]
+On the second day: bulbs[1] = 3, third bulb is turned on: [1,0,1]
+On the third day: bulbs[2] = 2, second bulb is turned on: [1,1,1]
+We return 2 because on the second day, there were two on bulbs with one off bulb between them.
 
+Input: bulbs = [1,2,3], k = 1
+Output: -1
+
+1 - We first make a list for the bulbs that shows the day it's turned on, so days[i] shows the day that the bulb i+1 is turned on.
+2- Next we pass a window of size k over the days array, and check if the day number for the bulbs in between is larger than the days[left] and the days[right]. 
+If it is, then for this window, when the left and right bult are turned on, 
+we have satisfied the required condition and we can record the days it took for this to happen, 
+which will be max(days[left], days[right]). If the condition is not satisfied, we pass this window and shift it one to the right.
+
+ 
+class Solution:
+    def kEmptySlots(self, bulbs: List[int], k: int) -> int:
+        n = len(bulbs)
+        light_on_day = [0]*n
+        left = 0
+        right = 0
+        for i in range(len(light_on_day)):
+            light_on_day[bulbs[i] - 1] = i + 1
+        print(light_on_day)
+        l = 0
+        r = l + k +1
+        res = float('inf')
+        while r < n:
+            cond = True
+            for i in range(l+1, r):
+                if light_on_day[i] < light_on_day[l] or light_on_day[i] < light_on_day[r]:
+                    cond = False
+                    break
+            if cond == True:
+                res = min(res, max(light_on_day[l], light_on_day[r]))
+            l += 1
+            r = l + k + 1
+        return res if res != float('inf') else -1
 
 
 
