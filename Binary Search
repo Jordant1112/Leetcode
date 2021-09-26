@@ -414,9 +414,37 @@ class Solution:
         
 
 
+## 1060 Missing Element in Sorted Array
 
+Given an integer array nums which is sorted in ascending order and all of its elements are unique and given also an integer k, 
+return the kth missing number starting from the leftmost number of the array.
 
+Input: nums = [4,7,9,10], k = 1
+Output: 5
+Explanation: The first missing number is 5.
 
+Input: nums = [4,7,9,10], k = 3
+Output: 8
+Explanation: The missing numbers are [5,6,8,...], hence the third missing number is 8.
+
+class Solution:
+ def missingElement(self, nums: List[int], k:int) -> int:
+   diff = nums[-1] - nums[0] + 1
+   missing = diff - len(nums)
+   if k > missing:
+     return nums[-1] + k - missing
+   
+   left = 0 
+   right = len(nums)-1
+   while left +1 < right:
+     m = left + (right - left)//2
+     missing = nums[m] - nums[left] - m + left
+     if missing < k:
+      left = m
+      k -= missing     ## keyKEY: move left forward, we need to minus the missing words of this range
+     else:
+      right = m
+   return nums[left] + k
 
 
 
