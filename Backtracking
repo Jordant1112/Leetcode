@@ -786,6 +786,39 @@ class Solution:
             self.backtrack(n,res+i, s, output)
     
 
+## 320 Generalized Abbreviation
+A word's generalized abbreviation can be constructed by taking any number of non-overlapping substrings and replacing them with their respective lengths. 
+For example, "abcde" can be abbreviated into "a3e" ("bcd" turned into "3"), 
+"1bcd1" ("a" and "e" both turned into "1"), and "23" ("ab" turned into "2" and "cde" turned into "3").
+Given a string word, return a list of all the possible generalized abbreviations of word. Return the answer in any order.
+
+
+Input: word = "word"
+Output: ["4","3d","2r1","2rd","1o2","1o1d","1or1","1ord","w3","w2d","w1r1","w1rd","wo2","wo1d","wor1","word"]
+
+
+class Solution:
+  def generateAbbreviations(self, word:str) -> List[str]:
+      n = len(word)
+      output = []
+      res = ''
+      i = 0
+      self.dfs(n, output, res, i, word)
+      return output
+  
+  def dfs(self, n, output, res, i, word):
+    if i == n:
+      output.append(res)
+    else:
+      self.dfs(n, output, res + word[i], i+1, word)
+      if not res or res[-1] > '9':
+        for j in range(i+1, n+1):
+          self.dfs(n, output, res + str(j-i), j, word)
+
+
+
+
+
 
 
 
