@@ -760,6 +760,31 @@ class Solution:
         backtrack(res)
         return output[k-1] if len(output) >= k else ''
 
+## 1980 Find Unique Binary String
+Given an array of strings nums containing n unique binary strings each of length n, 
+return a binary string of length n that does not appear in nums. If there are multiple answers, you may return any of them.
+
+Input: nums = ["01","10"]
+Output: "11"
+Explanation: "11" does not appear in nums. "00" would also be correct.
+
+class Solution:
+    def findDifferentBinaryString(self, nums: List[str]) -> str:
+        s = set(nums)
+        print(s)
+        n = len(nums[0])
+        res = ''
+        output = []
+        self.backtrack(n, res, s, output)
+        for i in output:
+            if i not in s:
+                return i
+    def backtrack(self, n, res, s, output):
+        if len(res) == n:
+            return output.append(res)
+        for i in '01':
+            self.backtrack(n,res+i, s, output)
+    
 
 
 
