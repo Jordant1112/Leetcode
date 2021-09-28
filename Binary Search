@@ -503,6 +503,46 @@ class Solution:
 
 
 
+## 1062 Longest Repeating Substring
+Given a string s, find out the length of the longest repeating substring(s). Return 0 if no repeating substring exists.
+Input: s = "abcd"
+Output: 0
+Explanation: There is no repeating substring.
+
+Input: s = "abbaba"
+Output: 2
+Explanation: The longest repeating substrings are "ab" and "ba", each of which occurs twice.
+
+Input: s = "aabcaabdaab"
+Output: 3
+Explanation: The longest repeating substring is "aab", which occurs 3 times.
+
+class Solution:
+    def longestRepeatingSubstring(self, s: str) -> int:
+        n = len(s)
+        l = 1
+        r = n
+        while l <= r:
+            m = l + (r-l)//2
+            if self.search(m, n, s) != -1:
+                l = m +1
+            else:
+                r = m-1
+        return l-1
+    
+    
+    def search(self, L, n, s) -> str:
+        seen = set()
+        for start in range(0, n-L+1):
+            tmp = s[start:start+L]
+            if tmp in seen:
+                return start
+            seen.add(tmp)
+        return -1
+
+
+
+
 
 
 
