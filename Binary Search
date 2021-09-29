@@ -669,7 +669,48 @@ class Solution:
           dp[i] = max(dp[i], dp[j] + 1)
    return max(dp)
 
-    
+## 825 Friends of Appropriate Ages
+There are n persons on a social media website. You are given an integer array ages where ages[i] is the age of the ith person.
+
+A Person x will not send a friend request to a person y (x != y) if any of the following conditions is true:
+
+age[y] <= 0.5 * age[x] + 7
+age[y] > age[x]
+age[y] > 100 && age[x] < 100
+Otherwise, x will send a friend request to y.
+
+Note that if x sends a request to y, y will not necessarily send a request to x. Also, a person will not send a friend request to themself.
+
+Return the total number of friend requests made.
+
+
+Input: ages = [16,16]
+Output: 2
+Explanation: 2 people friend request each other.
+
+Input: ages = [16,17,18]
+Output: 2
+Explanation: Friend requests are made 17 -> 16, 18 -> 17.
+
+class Solution:
+    def numFriendRequests(self, ages: List[int]) -> int:
+        cnt = 0
+        N = len(ages)
+        ages.sort()
+        for i in range(N):
+            a = ages[i]
+            idx1 = bisect.bisect(ages, a)
+            idx2 = bisect.bisect(ages, 0.5 * a + 7)
+            cnt += max(0, idx1 - idx2 - 1) 
+        return cnt
+
+
+
+
+
+
+
+
 
 
 
