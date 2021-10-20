@@ -55,3 +55,28 @@ class Solution(object):
                 ptr_2 -= 1
         return ''.join(s)
 
+## 680. Valid Palindrome II
+Given a string s, return true if the s can be palindrome after deleting at most one character from it.
+Input: s = "aba"
+Output: true
+
+Input: s = "abca"
+Output: true
+Explanation: You could delete the character 'c'.
+
+class Solution:
+    def validPalindrome(self, s: str) -> bool:
+        left = 0
+        right = len(s)-1
+        while left < right:
+            if s[left] != s[right]:
+                solution_1 = s[left:right]
+                solution_2 = s[left+1: right+1]
+                return solution_1 == solution_1[::-1] or solution_2 == solution_2[::-1]
+            left +=1
+            right -=1
+        return True
+
+
+
+
