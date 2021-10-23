@@ -136,6 +136,53 @@ class Solution:
         return nums
 
 
+##246 Strobogrammatic number
+Given a string num which represents an integer, return true if num is a strobogrammatic number.
+A strobogrammatic number is a number that looks the same when rotated 180 degrees (looked at upside down).
+
+
+Input: num = "69"
+Output: true
+
+Input: num = "88"
+Output: true
+
+Input: num = "962"
+Output: false
+## Approach 1
+class Solution:
+    def isStrobogrammatic(self, num: str) -> bool:
+        rotated_string = []
+        for char in reversed(num):
+            if char in {'0','1','8'}:
+                rotated_string.append(char)
+            elif char =='6':
+                rotated_string.append('9')
+            elif char =='9':
+                rotated_string.append('6')
+            else：
+                return False
+        s = ''.join(rotated_string)
+        return s == num
+## Approach 2
+Hashmap
+class Solution:
+    def isStrobogrammatic(self, num: str) -> bool:
+        d = {
+          '1': '1',
+          '2': '*',
+          '3': '*',
+          '4': '*',
+          '5': '*',
+          '6': '9',
+          '7': '*',
+          '8': '8',
+          '9': '6'
+        }
+        s = ''
+        for char in num:
+            s += d[char]
+        return s[::-1] == num
 
 
 
