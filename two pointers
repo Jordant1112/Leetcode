@@ -185,6 +185,37 @@ class Solution:
         return s[::-1] == num
 
 
+## 844 Backspace String Compare
+Given two strings s and t, return true if they are equal when both are typed into empty text editors. '#' means a backspace character.
+
+Note that after backspacing an empty text, the text will continue empty.
+
+Input: s = "ab#c", t = "ad#c"
+Output: true
+Explanation: Both s and t become "ac".
+
+Input: s = "a##c", t = "#a#c"
+Output: true
+Explanation: Both s and t become "c".
+
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        def build(s):
+            ans = []
+            for c in s:
+                if c != '#':
+                    ans.append(c)
+                elif ans:
+                    ans.pop()
+            return ''.join(ans)
+         return build(s) == build(t)
+### You can also use two pointer to go through the string s and t
+
+
+
+
+
+
 
 
 
