@@ -112,6 +112,59 @@ def connect(self, root: 'Node') -> 'Node':
     return root
 
 
+## 590. N-ary Tree Postorder Traversal
+Given the root of an n-ary tree, return the postorder traversal of its nodes' values.
+Nary-Tree input serialization is represented in their level order traversal. Each group of children is separated by the null value (See examples)
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+## Iterative
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        if not root:
+            return 
+        res = []
+        stack = [root]
+        while stack:
+            r = stack.pop()
+            if r:
+                res.append(r.val)
+            for child in r.children:
+                stack.append(child)
+        return res[::-1]
+
+
+
+## Recursive
+
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        self.res = []
+        if not root:
+            return self.res
+        self.dfs(root, self.res)
+        return self.res
+    
+    def dfs(self, root, res):
+        for child in root.children:
+            self.dfs(child, res)
+        res.append(root.val)
+        
+
+
+
+
+
+
+
+
+
 
 
 
