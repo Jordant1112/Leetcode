@@ -157,6 +157,48 @@ class Solution:
         res.append(root.val)
         
 
+### 559 Maximum depth of N-ary Tree
+Given a n-ary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+
+Input: root = [1,null,3,2,4,null,5,6]
+Output: 3
+
+## iterative
+
+class Solution:
+    def maxDepth(self, root: 'Node') -> int:
+        if not root:
+            return 0
+        stack = [(1, root)]
+        depth = 0
+        while stack:
+            d, val = stack.pop()
+            depth = max(depth, d)
+            for c in val.children:
+                stack.append((d+1, c))
+        return depth
+
+
+
+## recursive
+class Solution:
+    def maxDepth(self, root: 'Node') -> int:
+        if not root:
+            return 0
+        elif not root.children:
+            return 1
+        else:
+            h = [self.maxDepth(c) for c in root.children]
+            return max(h)+1
+            
+
+
+
+
 
 
 
