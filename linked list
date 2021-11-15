@@ -39,3 +39,36 @@ class Solution:
       head.next.next = head
       head.next = None
       return p
+
+## 92. Reverse Linked List II
+Given the head of a singly linked list and two integers left and right where left <= right, 
+reverse the nodes of the list from position left to position right, and return the reversed list.
+
+Input: head = [1,2,3,4,5], left = 2, right = 4
+Output: [1,4,3,2,5]
+
+class Solution:
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        left_prev = dummy
+        cur = head
+        for i in range(left-1):
+            left_prev, cur = cur, cur.next
+        prev = None
+        for i in range(right-left+1):
+            tmp.next = cur.next
+            cur.next = prev
+            prev, cur = cur, tmp.next
+        
+        left_prev.next.next = cur
+        left_prev.next = prev
+        return dummy.next
+
+
+
+
+
+
+
+
+
