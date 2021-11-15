@@ -1,0 +1,41 @@
+## 206 Revere Linked List I
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+Input: head = [1,2,3,4,5]
+Output: [5,4,3,2,1]
+
+Iterative:
+
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+      if not head:
+            return
+      pre = None
+      while head:
+            cur = head.next
+            head.next = pre
+            pre = head
+            head = cur
+      return pre
+
+
+Recursive:
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+      return self.reverse(head)
+    
+    def reverse(self, head, prev = None):
+      if not head:
+        return prev
+      node = head.next
+      head.next = prev
+      prev = head
+      return self.reverse(node, prev)
+    
+ class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+      if not head or not head.next:
+        return head
+      p = self.reverseList(head.next)
+      head.next.next = head
+      head.next = None
+      return p
