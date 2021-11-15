@@ -47,6 +47,8 @@ reverse the nodes of the list from position left to position right, and return t
 Input: head = [1,2,3,4,5], left = 2, right = 4
 Output: [1,4,3,2,5]
 
+
+Iterative
 class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         dummy = ListNode(0, head)
@@ -64,6 +66,29 @@ class Solution:
         left_prev.next = prev
         return dummy.next
 
+Recursive
+class Solution:
+    def __init__(self):
+        self.__successor = None
+        
+    def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
+        if left == 1:
+            return self.reverseN(head, right)
+        head.next = self.reverseBetween(head.next, left -1, right -1)
+        return head
+        
+        
+    def reverseN(self, head, n):
+        if n == 1:
+            self.__successor = head.next
+            return head
+        last = self.reverseN(head.next, n-1)
+        head.next.next = head
+        head.next = self.__successor
+        return last
+        
+        
+    
 
 
 
