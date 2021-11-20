@@ -144,15 +144,63 @@ class Solution:
       self.helper(root.right, v*10 + root.val)
       
 
+## 103 Binary Tree Zigzag Level Order traversal
+Given the root of a binary tree, return the zigzag level order traversal of its nodes' values. 
+(i.e., from left to right, then right to left for the next level and alternate between).
+
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
 
 
+## DFS
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        self.res = []
+        self.dfs(root, 0)
+        return self.res
+    
+    def dfs(self, root,i):
+        if not root:
+            return []
+        elif len(self.res) <= i:
+            self.res.append([root.val])
+        elif i % 2 ==0:
+            self.res[i].extend([root.val])
+        else:
+            self.res[i].insert(0, root.val)
+        self.dfs(root.left, i+1)
+        self.dfs(root.right, i+1)
+        
 
-
-
-
-
- 
-
+## BFS  
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
+        queue = collections.deque([root])
+        res = []
+        even_level = False
+        while queue:
+            n = len(queue)
+            level = []
+            for i in range(n):
+                if even_level:
+                    node = queue.pop()
+                    if node.right:
+                        queue.appendleft(node.right)
+                    if node.left:
+                        queue.appendleft(node.left)
+                else:
+                    node = queue.popleft()
+                    if node.left:
+                        queue.append(node.left)
+                    if node.right:
+                        queue.append(node.right)
+                level.append(node.val) 
+            res.append(level)
+            even_level = not even_level
+        return res
+    
 
 
 
