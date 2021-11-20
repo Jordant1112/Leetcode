@@ -201,6 +201,27 @@ class Solution:
             even_level = not even_level
         return res
     
+## 563 Binary Tree Tilt
+Given the root of a binary tree, return the sum of every tree node's tilt.
+The tilt of a tree node is the absolute difference between the sum of all left subtree node values and all right subtree node values. 
+If a node does not have a left child, then the sum of the left subtree node values is treated as 0. The rule is similar if there the node does not have a right child.
+
+class Solution:
+    def findTilt(self, root: Optional[TreeNode]) -> int:
+        self.total_tilt = 0
+        self.dfs(root)
+        return self.total_tilt
+    def dfs(self, root):
+        if not root:
+            return 0
+        left_sum = self.dfs(root.left)
+        right_sum = self.dfs(root.right)
+        tilt = abs(left_sum - right_sum)
+        self.total_tilt += tilt
+        return left_sum+right_sum + root.val
+
+
+
 
 
 
