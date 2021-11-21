@@ -89,8 +89,29 @@ class Solution:
         
         
     
+## 234 Palindrome Linked List
 
+Given the head of a singly linked list, return true if it is a palindrome.
 
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        fast = slow = head
+        while fast != None and fast.next != None:
+            fast = fast.next.next
+            slow = slow.next
+        node = None
+        while slow:
+            tmp = slow.next
+            slow.next = node
+            node = slow
+            slow = tmp
+        while node:
+            if node.val == head.val:
+                node = node.next
+                head = head.next
+            else:
+                return False
+        return True
 
 
 
