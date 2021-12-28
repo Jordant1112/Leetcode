@@ -333,6 +333,32 @@ class Solution:
                 return None
 
  
+## 542 01Matrix
+Given an m x n binary matrix mat, return the distance of the nearest 0 for each cell.
+The distance between two adjacent cells is 1.
+
+class Solution:
+    def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
+    	q = deque()
+	for i in range(len(mat)):
+		for j in range(len(mat[0]):
+			if mat[i][j] == 0:
+				q.append((i,j))
+			else:
+				mat[i][j] = -1
+	while q:
+		x,y = q.popleft()
+		dirs = [(1,0),(-1,0), (0,1), (0,-1)]
+		for r,c in dirs:
+			newx, newy = x+r, y +c
+			if mat[newx][newy] == -1 and 0<=len(newx)<= len(mat)-1 and 0 <= len(newy)<=len(mat[0])-1:
+				mat[newx][newy] = mat[x][y] + 1
+				q.append((newx, newy))
+	return mat
+	
+
+
+
 
 
 
