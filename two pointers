@@ -310,14 +310,53 @@ class Solution:
             r -= 1
             
         
+  ## 45 Jump Game II
+  Given an array of non-negative integers nums, you are initially positioned at the first index of the array.
+Each element in the array represents your maximum jump length at that position.
+Your goal is to reach the last index in the minimum number of jumps.
+You can assume that you can always reach the last index.        
         
-        
-        
-        
+Input: nums = [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+
+Class Solution:
+    def Jump(self, nums) -> int:
+        if len(nums)<=1:
+            return 0
+        l = 0 
+        r = nums[0]
+        times = 1
+        while r < len(nums)-1:
+            times +=1
+            nxt = max(i + nums[i] for i in range(l, r+1)
+            l, r = r, nxt
+        return times
         
 
 
+# 5 Longest Palindromic Substring
+Given a string s, return the longest palindromic substring in s
 
+Input: s = 'babad'
+output: bab
+
+class solution:
+    def longestPalindrome(self, s)-> str:
+        res = ''
+        for i in range(len(s)):
+            output = self.helper(s,i,i).  ## odd situation
+            if len(output)> len(res):
+                res = output
+            output = self.helper(s,i,i+1)
+            if len(output)> len(res):
+                res = output
+        return res
+    def helper(self, s, i, j):
+        while i >=0 and j <= len(s)-1 and s[i]==s[j]:
+            i -= 1
+            j +=1
+        return s[i+1:j]
 
 
 
