@@ -396,6 +396,47 @@ class Solution:
 
 
 
+## 31 Next Permutation
+Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+If such an arrangement is impossible, it must rearrange it to the lowest possible order (i.e., sorted in ascending order).
+The replacement must be in place and use only constant extra memory.
+
+
+Input: nums = [1,2,3]
+Output: [1,3,2]
+
+class Solution:
+    def nextPermutation(self, nums)-> None:
+        N = len(nums)
+        pivot = 0
+        for i in range(N-1,0,-1):
+            if nums[i-1] < nums[i]:
+                pivot = i
+                break
+        swap = N-1
+        while nums[pivot-1] >= nums[swap]:
+            swap -=1
+        nums[pivot-1], nums[swap] = nums[swap], nums[pivot-1]
+        nums[pivot:] = sorted(nums[pivot:])
+        return nums
+        
+class Solution:
+    def nextPermutation(self, nums)-> None:
+        i = j = k = len(nums)-1
+        while i > 0 and nums[i-1] >= nums[i]:
+            i -=1
+        if i ==0:
+            nums.reverse()
+            return
+        while nums[i-1] >= nums[j]:
+            j -=1
+        nums[j], nums[i-1] = nums[i-1], nums[j]
+        while i < k:
+            nums[i], nums[k] = nums[k], nums[i]
+        return nums
+        
+
+
 
 
 
