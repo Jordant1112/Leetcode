@@ -259,5 +259,94 @@ class Solution:
         self.dfs(root.right, root, depth+1,x,y)
 
 
+## 1123 Lowest Common Ancestor of Deepest Leaves
+Given the root of a binary tree, return the lowest common ancestor of its deepest leaves.
+
+Recall that:
+
+The node of a binary tree is a leaf if and only if it has no children
+The depth of the root of the tree is 0. if the depth of a node is d, the depth of each of its children is d + 1.
+The lowest common ancestor of a set S of nodes, is the node A with the largest depth such that every node in S is in the subtree with root A.
+
+
+Input: root = [3,5,1,6,2,0,8,null,null,7,4]
+Output: [2,7,4]
+Explanation: We return the node with value 2, colored in yellow in the diagram.
+The nodes coloured in blue are the deepest leaf-nodes of the tree.
+Note that nodes 6, 0, and 8 are also leaf nodes, but the depth of them is 2, but the depth of nodes 7 and 4 is 3.
+
+## Iteratively
+class Solution:
+  def lcaDeepestLeaves(self, root) -> Optional[TreeNode]:
+    if not root:
+      return None
+    d = {}
+    stack = [root]
+    
+    while stack:
+      last_level = []
+      for _ in range(len(stack)):
+        node = stack.pop(0)
+        last_level.append(node)
+        if node.left:
+          stack.append(node.left)
+          d[node.left] = node
+        if node.right:
+          stack.append(node.right)
+          d[node.right] = node
+    
+    while len(last_level) > 1:
+      parent = set()
+      for node in last_level:
+        parent.add(node)
+      last_level = list(parent)
+    return last_level[0]
+
+### Recursively
+
+class Solution:
+    def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+      if not root:
+        return None
+      self.max_depth = 0
+      self.res = None
+      self.helper(root, 0)
+      return self.res
+    
+    
+    def helper(root, level):
+      self.max_depth = max(self.max_depth, level)
+      if not root:
+        return level
+      l = self.helper(root.left, level+1)
+      r = self.helper(root.right, level+1)
+      if l == r == max_depth:
+        self.res = root
+      return max(l, r)
+      
+      
+      
+      
+
+
+
+
+
+      
+    
+    
+    
+    
+    
+    
+    
+
+
+
+
+
+
+
+
 
 
