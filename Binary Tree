@@ -360,9 +360,38 @@ class Solution:
       
 
 
+## 652 Find Duplicate Subtrees
+Given the root of a binary tree, return all duplicate subtrees.
+For each kind of duplicate subtrees, you only need to return the root node of any one of them.
+Two trees are duplicate if they have the same structure with the same node values.
 
+Input: root = [1,2,3,4,null,2,4,null,null,4]
+Output: [[2,4],[4]]
 
-
+class Solution:
+  def findDuplicateSubtrees(self, root) -> List[Optional[TreeNode]]:
+    d = {}
+    res = []
+    self.helper(root, d)
+    for val, tree in d.values():
+      if val > 1:
+        res.append(tree)
+    return res
+  
+  
+  
+  def helper(self, root, d):
+    if not root:
+      return 'x'
+    l = self.helper(root.left, d)
+    r = self.helper(root.right, d)
+    tmp = str(root.val) + ' ' + l + ' ' + r
+    if tmp not in d:
+      d[tmp] = [1, root]
+    else:
+      d[tmp][0] +=1
+    return tmp
+    
       
     
     
